@@ -7,4 +7,4 @@ O arquivo index.php é o arquivo inicial da aplicação.
 
 A aplicação rodará melhor em um dispositivo com o navegador Web Google Chrome instalado e com a resolução de 1366X768.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qORcTH99ZC0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Segue o link para vídeo demonstrativo da aplicação: https://youtu.be/qORcTH99ZC0
