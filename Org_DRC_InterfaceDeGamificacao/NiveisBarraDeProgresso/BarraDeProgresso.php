@@ -7,9 +7,20 @@ class BarraDeProgresso implements GeraBarraDeProgresso
     {
         /* Gera a barra de progresso */
         echo '
-				<div>
-					<h3>BarraDeProgresso</h3>
-				</div>';
+            <!doctype html>
+            <html>
+            <head>
+            <meta charset="utf-8">
+            <title>Documento sem título</title>
+            </head>
+            
+            <body>
+                <a href="index.php?acao=abrirTrilha"><button>Voltar</button></a><br>
+            	<img src="img/niveisebarradeprogresso.png">
+            </body>
+            </html>
+
+        ';
     }
 
     

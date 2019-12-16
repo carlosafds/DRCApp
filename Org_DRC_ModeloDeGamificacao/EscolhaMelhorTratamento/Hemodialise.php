@@ -21,6 +21,10 @@ class Hemodialise implements GeraHemodialise
     }
     
     public function getConfiguracoes(){
+        $this->gerarInstrucoes();
+        $this->gerarVideos();
+        $this->gerarRegras();
+        $this->gerarTabuleiro();
         return $this->configuracoes;
     }
 }

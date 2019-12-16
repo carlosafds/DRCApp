@@ -6,5 +6,6 @@ interface GeraPontuacao
     public function somaAtividadeComExito();
     public function somaAtividadeIncompleta();
     public function registroAtividadeAbandonada();
+    public function getPontuacao();
 }
 

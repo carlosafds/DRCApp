@@ -8,6 +8,10 @@ use Org_DRC_InterfaceDeGamificacao\Classificacao\GeraClassificacao;
 use Org_DRC_InterfaceDeGamificacao\Configuracoes\IntegraDefinicoes;
 use Org_DRC_InterfaceDeGamificacao\NiveisBarraDeProgresso\GeraBarraDeProgresso;
 use Org_DRC_InterfaceDeGamificacao\NiveisBarraDeProgresso\GeraNiveis;
+use Org_DRC_InterfaceDeGamificacao\NiveisBarraDeProgresso\BarraDeProgresso;
+use Org_DRC_InterfaceDeGamificacao\Configuracoes\Definicoes;
+use Org_DRC_InterfaceDeGamificacao\NiveisBarraDeProgresso\Niveis;
+use Org_DRC_ControleDeGamificacao\Motor\ControladorM;
 
 class TrilhaConcreta//class View
 {
@@ -17,63 +21,16 @@ class TrilhaConcreta//class View
     private $configuracoes;
     private $barraDeProgresso;
     private $niveis;
+    private $controle;
     
-    public function addAvatarTexto(InsereTexto $objAvatarTexto){
-        $this->avatar[] = $objAvatarTexto;
+    function __construct(){
+        $this->barraDeProgresso = new BarraDeProgresso();
+        $this->configuracoes = new Definicoes();
+        $this->niveis = new Niveis();
+        $this->controle = new ControladorM();
     }
     
-    public function addAvatarVoz(InsereVoz $objAvatarVoz){
-        $this->avatar[] = $objAvatarVoz;
-    }
     
-    public function addChatbotDRC(GeraChatbot $objChatbot){
-        $this->chatbot = $objChatbot;
-    }
-    
-    public function addClassificacao(GeraClassificacao $objClassificacao){
-        $this->classificacao = $objClassificacao;
-    }
-    
-    public function addConfiguracoes(IntegraDefinicoes $objDefinicoes){
-        $this->configuracoes = $objDefinicoes;
-    }
-    
-    public function addBarraDeProgresso(GeraBarraDeProgresso $objBarraDeProgresso){
-        $this->barraDeProgresso = $objBarraDeProgresso;
-    }
-    
-    public function addNiveis(GeraNiveis $objNiveis){
-        $this->niveis = $objNiveis;
-    }
-    
-    public function addTrilha(){
-        echo '<a href="trilhas.html"><div id="start"></div></a>';
-    }
-    
-    //codigo da parte do MVC - VIEW    
-    public function login($validacao) {
-        
-        if(!isset($validacao)){
-            
-            /* Exibe o formulário de login, onde será realizada a requisição pelo usuário */
-            echo '
-				<div>
-					<h3>Login</h3>
-					<form action="index.php?acao=login" method ="post">
-						Usu&aacute;rio:
-						<input type="text" name="usuario"></br></br>
-						Senha:
-						<input type="password" name="senha"></br></br>
-						<input class="botao" type="reset"  value="Limpar">
-						<input class="botao" type="submit" name="submit" value="Logar">
-					</form>
-				</div>';
-        }else{
-            
-            /* Exibe o resultado da validação do login feita pela Model */
-            echo '<h3>'.$validacao.'</h3>';
-        }
-    }
     
     public function geraApp(){
         echo '
@@ -274,22 +231,13 @@ class TrilhaConcreta//class View
             </html>';
     }
     
-    public function abrirProgresso(){
-        echo '
-            <!doctype html>
-            <html>
-            <head>
-            <meta charset="utf-8">
-            <title>Documento sem título</title>
-            </head>
-            
-            <body>
-                <a href="index.php?acao=abrirTrilha"><button>Voltar</button></a><br>
-            	<img src="img/niveisebarradeprogresso.png">
-            </body>
-            </html>
-
-        ';
+    public function abrirProgresso(float $pontuacaoAtual){
+        if(isset($this->barraDeProgresso)){
+            $this->barraDeProgresso->GeraBarraDeProgresso();
+        }else{
+            $this->barraDeProgresso = new BarraDeProgresso();
+            $this->barraDeProgresso->GeraBarraDeProgresso();
+        }
     }
     
     public function usoMaquinaHemodialise(){
@@ -331,7 +279,7 @@ class TrilhaConcreta//class View
         ';
     }
     
-    public function tiposDeExames(){
+    public function tiposDeExames($tiposDeExame){
         echo '
             <!doctype html>
             <html>

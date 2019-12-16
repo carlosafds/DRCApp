@@ -3,14 +3,14 @@ use Org_DRC_ControleDeGamificacao\Motor\ControladorM;
 use Org_DRC_InterfaceDeGamificacao\Trilha\TrilhaConcreta;
 
 
-/* Pega a ação passada pela URL*/
 $acao = $_GET['acao'];
 
-/* Valida a ação passada, verifica se ela existe e se ela e o login
- * Se a ação for exisir e for login inicia a função login do Controller
- * Se não inicia a função login da View*/
+/* Valida a ação passada e verifica se ela existe.*/
+
 if(isset($acao)){
-    switch (acao){
+    /* Pega a ação passada pela URL*/
+    
+    switch ($acao){
         //Vai para a tela inicial da aplicação
         case 'iniciar':
             $controller = new ControladorM();

@@ -12,6 +12,8 @@ use Org_DRC_ModeloDeGamificacao\ControleConsumoSal\GeraControleSal;
 use Org_DRC_ModeloDeGamificacao\EscolhaMelhorTratamento\GeraHemodialise;
 use Org_DRC_ModeloDeGamificacao\EscolhaMelhorTratamento\GeraPeritoneal;
 use Org_DRC_ModeloDeGamificacao\Pontuacao\GeraPontuacao;
+use Org_DRC_ModeloDeGamificacao\Pontuacao\CalculoDePontuacao;
+use Org_DRC_ModeloDeGamificacao\EscolhaMelhorTratamento\Hemodialise;
 
 class LogicaDeNegocio implements GeraLogica
 {
@@ -23,12 +25,14 @@ class LogicaDeNegocio implements GeraLogica
     private $peritoneal;
     private $pontuacao;
     private $nivelDeDificuldade;
+    private $hemodialise;
     
     function __construct(){
-        
+        $this->pontuacao = new CalculoDePontuacao();
+        $this->hemodialise = new Hemodialise();
     }
     
-    public function addPlanoDeTratamento($tipoDePlano){
+    public function addPlanoDeTratamento(int $tipoDePlano){
         switch ($tipoDePlano){
             case 1:
                 $this->planoDeTratamento = new DRCEstagio1();
@@ -46,49 +50,20 @@ class LogicaDeNegocio implements GeraLogica
         }
     }
     
-    public function addControleSal(GeraControleSal $objControleSal){
-        $this->controleSal = $objControleSal;
-    }
-    
-    public function addDesafios(GeraDesafios $objDesafio){
-        $this->desafios[] = $objDesafio;
-    }
-    public function addMissoes(GeraMissoes $objMissao){
-        $this->missoes = $objMissao;
-    }
-    
-    public function addHemodialise(GeraHemodialise $objHemodialise){
-        $this->hemodialise = $objHemodialise;
-    }
-    
-    public function addDialisePeritoneal(GeraPeritoneal $objPeritoneal){
-        $this->peritoneal = $objPeritoneal;
-    }
-    
-    public function addPontuacao(GeraPontuacao $objPontuacao){
-        $this->pontuacao = $objPontuacao;
-    }
-    
-    public function validaDados($usuario,$senha) {
-        
-        /* Aplica a validação ao usuário e senha passados, utilizando as regras de négocio especificas para ele. */
-        if(strlen($usuario)<5){
-            
-            return 'Digite o usu&aacute;rio corretamente';
-            
-        }else if(strlen($senha)<8){
-            
-            return 'A senha deve possuir mais de 8 caracteres';
-            
-        }else{
-            
-            return 'Login efetuado com sucesso';
-            
-        }
-    }
-    
-    public function defineDificuldade($nivelDeDificuldade){
+    public function defineDificuldade(int $nivelDeDificuldade){
         $this->nivelDeDificuldade = $nivelDeDificuldade;
+    }
+    
+    public function getPontuacaoAtual(){
+        return $this->pontuacao->getPontuacao(); 
+    }
+    
+    public function getHemodialise(){
+        return $this->hemodialise;
+    }
+    
+    public function getTipoDeExames(){
+        
     }
 }
 

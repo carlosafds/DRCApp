@@ -4,62 +4,67 @@ namespace Org_DRC_ControleDeGamificacao\Motor;
 use Org_DRC_ModeloDeGamificacao\LogicaDeGamificacao\LogicaDeNegocio;
 use Org_DRC_InterfaceDeGamificacao\Trilha\TrilhaConcreta;
 use Org_DRC_ModeloDeGamificacao\EscolhaMelhorTratamento\Hemodialise;
+use Org_DRC_ControleDeGamificacao\ControleEstagio1\Controlador1;
+use Org_DRC_ControleDeGamificacao\ModuloIntegrador\Integrador;
 
 class ControladorM //class Controller
 {
+        private $model;
+        private $view;
+        private $controleTipoDRC;
+        private $integrador;
+        
+        function __construct(){
+            $this->model = new LogicaDeNegocio();
+            $this->view = new TrilhaConcreta();
+            $this->controleTipoDRC = new Controlador1();
+            $this->integrador = new Integrador();
+        }
         
         public function iniciar() {
-            
             /*Inicia a aplicação apresentando na tela a trilha com os desafios e missoes*/
-            $view = new TrilhaConcreta();
-            $view->geraApp();
+            $this->view->geraApp();
         }
         
         public function abrirNivelDeDificuldade(){
-            $view = new TrilhaConcreta();
-            $view->definirNivelDeDificuldade();
+            $this->view->definirNivelDeDificuldade();
         }
         
         public function definirNivelDeDificuldade($nivelDeDificuldade){
             //retorna para a tela inicial após ter definido o nível de dificuldade      
-            $view = new TrilhaConcreta();
-            $view->geraApp();
+            $this->view->geraApp();
             
             /* Encaminha os dados a Model para que seja realizado a definição do nivel de dificuldade */
-            $model = new LogicaDeNegocio();
-            $model->defineDificuldade($nivelDeDificuldade);
+            $this->model->defineDificuldade($nivelDeDificuldade);
         }
         
         public function abrirTrilha(){
-            $view = new TrilhaConcreta();
-            $view->abrirTrilha();
+            $this->view->abrirTrilha();
         }
         
         public function abrirMissaoHemodialise(){
-            $configuracoes = new Hemodialise();
-            $configuracoes->getConfiguracoes();
-            $view = new TrilhaConcreta();
-            $view->abrirMissaoHemodialise($configuracoes);
+            $this->controleTipoDRC->hemodialise();
+            $configuracoes = $this->model->getHemodialise();
+            $this->view->abrirMissaoHemodialise($configuracoes);
         }
         
         public function abrirBarraDeProgresso(){
-            $view = new TrilhaConcreta();
-            $view->abrirProgresso();
+            $pontuacaoAtual = $model->getPontuacaoAtual();
+            $this->view->abrirProgresso($pontuacaoAtual);
         }
         
         public function abrirVideosDrc(){
-            $view = new TrilhaConcreta();
-            $view->abrirVideosDrc();
+            $this->view->abrirVideosDrc();
         }
         
         public function usoMaquinaHemodialise(){
-            $view = new TrilhaConcreta();
-            $view->usoMaquinaHemodialise();
+            $this->view->usoMaquinaHemodialise();
         }
         
         public function tiposDeExames(){
-            $view = new TrilhaConcreta();
-            $view->tiposDeExames();
+            $this->model->addPlanoDeTratamento(1);
+            $tiposDeExame = $this->model->getTipoDeExame();
+            $this->view->tiposDeExames($tiposDeExame);
         }
 }
 
